@@ -11,7 +11,8 @@ canvas.height = innerHeight;
 
 var score = 0,
     lastTime = 0,
-    isOn = false;
+    isOn = false,
+    initialLives = 5;
 
 // KEYS EVENTS LISTENERS 
 
@@ -54,7 +55,7 @@ wolf = {
     height: wolf_height,
     x: innerWidth / 2 - wolf_width / 2,
     y: innerHeight - (wolf_height + 180),
-    lives: 10,
+    lives: initialLives,
     draw: function() {
         c.drawImage(wolf_img, this.x, this.y, this.width, this.height);
     }
@@ -89,11 +90,11 @@ var eggsArr = [],
 egg_img.src = "images/egg.png";
 
 function enhanceLevel(score) {
-    if(score <= 5){ return 1500; }
-    else if(score <= 10){ return 1200; }
-    else if(score <= 15){ return 1000; }
-    else if(score <= 20){ return 700; }
-    else if(score <= 25){ return 400; }
+    if(score <= 10){ return 1500; }
+    else if(score <= 20){ return 1200; }
+    else if(score <= 30){ return 1000; }
+    else if(score <= 50){ return 700; }
+    else if(score <= 60){ return 400; }
     return 200;
 };
 
@@ -166,10 +167,10 @@ function create_egg(side) {
 };
 
 function catches(a, b) {
-    return 	a.x < b.x + b.width &&
-		    a.x + a.width > b.x &&
-		    a.y < b.y + b.height &&
-		    a.y + a.height > b.y;
+    return a.x < b.x + b.width &&
+		a.x + a.width > b.x &&
+        a.y < b.y + b.height &&
+        a.y + a.height > b.y;
 };
 
 function handleCatch() {
@@ -242,7 +243,7 @@ function animate(currentTime) {
         isOn = false;
         lastTime = 0;
         score = 0;
-        wolf.lives = 10;
+        wolf.lives = initialLives;
         eggsArr = [];
     };
 };
